@@ -84,6 +84,9 @@ class WeekView<T> extends StatefulWidget {
   /// Background color of week view page.
   final Color backgroundColor;
 
+  /// Scroll offset of week view page.
+  final double scrollOffset;
+
   /// Called when user taps on event tile.
   final CellTapCallback<T>? onEventTap;
 
@@ -114,6 +117,7 @@ class WeekView<T> extends StatefulWidget {
     this.weekTitleHeight = 50,
     this.weekDayBuilder,
     this.backgroundColor = Colors.white,
+    this.scrollOffset = 0.0,
     this.onEventTap,
     this.onDateLongPress,
   }) : super(key: key);
@@ -157,6 +161,8 @@ class WeekViewState<T> extends State<WeekView<T>> {
 
   late EventController<T> _controller;
 
+  late ScrollController _scrollController;
+
   @override
   void initState() {
     super.initState();
@@ -183,6 +189,8 @@ class WeekViewState<T> extends State<WeekView<T>> {
     _hourHeight = widget.heightPerMinute * 60;
     _height = _hourHeight * Constants.hoursADay;
     _timeLineOffset = widget.timeLineOffset;
+    _scrollController =
+        ScrollController(initialScrollOffset: widget.scrollOffset);
     _pageController = PageController(initialPage: _currentIndex);
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();
     _timeLineBuilder = widget.timeLineBuilder ?? _defaultTimeLineBuilder;
@@ -295,6 +303,7 @@ class WeekViewState<T> extends State<WeekView<T>> {
                         showVerticalLine: true,
                         controller: _controller,
                         hourHeight: _hourHeight,
+                        scrollController: _scrollController,
                         eventArranger: _eventArranger,
                       );
                     },

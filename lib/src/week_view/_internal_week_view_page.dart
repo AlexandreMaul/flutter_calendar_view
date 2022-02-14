@@ -71,6 +71,8 @@ class InternalWeekViewPage<T> extends StatelessWidget {
   /// Width of week title.
   final double weekTitleWidth;
 
+  final ScrollController scrollController;
+
   /// Called when user taps on event tile.
   final CellTapCallback<T>? onTileTap;
 
@@ -99,6 +101,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
     required this.eventArranger,
     required this.verticalLineOffset,
     required this.weekTitleWidth,
+    required this.scrollController,
     required this.onTileTap,
     required this.onDateLongPress,
   }) : super(key: key);
@@ -135,6 +138,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
           ),
           Expanded(
             child: SingleChildScrollView(
+              controller: scrollController,
               child: SizedBox(
                 height: height,
                 width: width,
